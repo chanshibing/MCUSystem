@@ -23,4 +23,5 @@ public:
 	Point2f getTransformPoint(const Point2f originalPoint, const Mat &transformMaxtri);//计算原始图像点位在经过矩阵变换后在目标图像上对应位置
 	int imageStitching_rows(Mat leftImage, Mat rightImage, Mat &outImage, const float widthByWhole);//行拼接算法
 	int imageStitching_cols(Mat leftImage, Mat rightImage, Mat &outImage, const float heightByImage, int currentCol);//行拼接算法
+	int imageStitching_cols2(Mat leftImage, Mat rightImage, Mat &outImage, const float heightByImage, int currentCol);//行拼接算法
 };

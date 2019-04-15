@@ -13,6 +13,8 @@ History:
 class KMeans
 {
 public:
+	double thresh = 0;
+
 	enum InitMode
 	{
 		InitRandom,

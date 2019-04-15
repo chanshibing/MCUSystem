@@ -1,3 +1,11 @@
 python/*.h5
-
-
+ico/
+Debug/
+__pycache__/
+images/
+Include_excel/
+lib64_excel/
+pin_image1/
+res/
+txt/
+x64/

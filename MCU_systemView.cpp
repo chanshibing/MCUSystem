@@ -976,7 +976,7 @@ DWORD WINAPI imageStitching(LPVOID p)
 			::PostMessage(para->GetSafeHwnd(), WM_USER_STOP_MSG, WPARAM(0), LPARAM(0));
 			return 0;
 		}
-		para->flag_TXPJSucess = para->txpjAlgorithm.imageStitching_cols(para->leftImage, para->rightImage, para->outImage, para->widthByImage, i);//列拼接
+		para->flag_TXPJSucess = para->txpjAlgorithm.imageStitching_cols2(para->leftImage, para->rightImage, para->outImage, para->widthByImage, i);//列拼接
 		para->outImage.copyTo(para->leftImage);
 		::SendMessage(para->GetSafeHwnd(), WM_USER_TXPJ_MSG, WPARAM(0), LPARAM(0));//调用显示信息函数
 		if (para->flag_TXPJSucess == 0)//如果拼接失败

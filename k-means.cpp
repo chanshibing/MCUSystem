@@ -364,7 +364,7 @@ double KMeans::CalcDistance(const double* x, const double* u, int dimNum)
 	double temp = 0;
 	for(int d = 0; d < dimNum; d++)
 	{
-		if (abs(x[d] - u[d]) > 5){
+		if (abs(x[d] - u[d]) > thresh){
 			temp += (x[d] - u[d]) * (x[d] - u[d]);
 		}
 	}
