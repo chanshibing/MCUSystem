@@ -29,6 +29,6 @@ public:
 	CComboBox m_class;
 	virtual BOOL OnInitDialog();
 
-	std::vector<CString> className;//类别名称
+	std::vector<CString> className;//类别名称1
 	
 };

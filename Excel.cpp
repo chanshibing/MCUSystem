@@ -10,8 +10,8 @@ covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
 CApplication Excel::application;
 
 string v[10] = { "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1" };
-string first_row[10] = { "类别", "坐标X1", "坐标Y1", "坐标X2", "坐标Y2", "类型", "宽(mm)", "高(mm)", "引脚1", "引脚2" };
-string head_v[10] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+string first_row[12] = { "编号", "类别", "坐标X1", "坐标Y1", "坐标X2", "坐标Y2", "类型", "宽(mm)", "高(mm)", "引脚1", "引脚2", "界面"};
+string head_v[12] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"};
 
 Excel::Excel() :isLoad(false)
 {
