@@ -228,8 +228,23 @@ public:
 	int m_column;//选中的列号
 
 	std::mutex _lock;//主线程锁
+	
 private:
+	int clientToLeft = 0;//图片显示区域到客户端左边距离
+	int clientToRight = 0;//图片显示区域到客户端右边距离
+	int clientToUp = 0;//图片显示区域到客户端上边距离
+	int clientToBottom = 0;//图片显示区域到客户端下边距离
 
+	void adjustShowPictureRegion(int left, int right, int top, int bottom);//调整显示图片区域
+
+	void hideMessageList();//隐藏左边显示元器件信息的list
+	void showMessageList();//显示左边显示元器件信息列表
+	void hideAllDetectList();//隐藏右边所有元器件列表
+	void showAllDetectList();//显示右边所有元器件列表
+	void hideTXPJMessageEdit();//隐藏左边图像拼接信息显示框
+	void showTXPJMessageEdit();//显示左边图像拼接信息显示框
+	void hideButtonCompo();//隐藏翻页组件
+	void showButtonCompo();//显示翻页组件
 public:
 	afx_msg void OnFileOpen();
 	afx_msg void OnSetpara();

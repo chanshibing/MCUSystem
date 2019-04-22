@@ -99,8 +99,8 @@ int TXPJAlgorithm::imageStitching_rows(Mat leftImage, Mat rightImage, Mat &outIm
 	KeyPoint::convert(leftImagePoints, leftKeyPoint);
 	KeyPoint::convert(rightImagePoints, rightKeyPoint);
 
-	Mat o1;
-	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, o1);
+	/*Mat o1;
+	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, o1);*/
 
 
 	//计算斜率
@@ -136,8 +136,8 @@ int TXPJAlgorithm::imageStitching_rows(Mat leftImage, Mat rightImage, Mat &outIm
 	}
 
 
-	Mat o2;
-	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, o2);
+	/*Mat o2;
+	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, o2);*/
 
 	//计算出现频率最多的距离
 	double *rightLeftPointDistance = new double[leftKeyPoint.size()];
@@ -165,13 +165,11 @@ int TXPJAlgorithm::imageStitching_rows(Mat leftImage, Mat rightImage, Mat &outIm
 	{
 		numberOflabels[i] = 0;
 	}
-	ofstream file("new.txt");
 	for (int i = 0; i < size; i++)
 	{
 		numberOflabels[labels[i]]++;
-		file << labels[i] << "__" << distancesVector[i] << endl;
 	}
-	file.close();
+	
 	//找到最多的labels
 	int maxLabels = 0;//数量
 	int indexLabels = 0;//位置
@@ -213,6 +211,9 @@ int TXPJAlgorithm::imageStitching_rows(Mat leftImage, Mat rightImage, Mat &outIm
 	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, o3);
 
 	int averageDistance = distancesVector[0];
+	if (averageDistance > leftImage.cols || averageDistance > rightImage.cols){
+		return 0;
+	}
 
 	//在最强匹配点左侧的重叠区域进行累加，是衔接稳定过渡，消除突变
 	Mat imageLeftOverlap, imageRightOverlap; //图1和图2的重叠部分	
@@ -607,8 +608,8 @@ int TXPJAlgorithm::imageStitching_cols2(Mat leftImage, Mat rightImage, Mat &outI
 	KeyPoint::convert(leftImagePoint, leftKeyPoint);
 	KeyPoint::convert(rightImagePoint, rightKeyPoint);
 
-	Mat OutImage1;
-	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, OutImage1);
+	/*Mat OutImage1;
+	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, OutImage1);*/
 	
 
 	//斜率排除
@@ -675,8 +676,8 @@ int TXPJAlgorithm::imageStitching_cols2(Mat leftImage, Mat rightImage, Mat &outI
 	delete slopes;
 
 
-	Mat outImae1;
-	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, outImae1);
+	//Mat outImae1;
+	//drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, outImae1);
 
 	//计算出现频率最多的距离
 	double *rightLeftPointDistance = new double[leftKeyPoint.size()];
@@ -746,8 +747,8 @@ int TXPJAlgorithm::imageStitching_cols2(Mat leftImage, Mat rightImage, Mat &outI
 	delete labels;
 	delete kmeans;
 
-	Mat outImae2;
-	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, outImae2);
+	/*Mat outImae2;
+	drawMatches(leftImageGray, leftKeyPoint, rightImageGray, rightKeyPoint, m_InlierMatches, outImae2);*/
 
 	int height_move = rightKeyPoint[0].pt.y - leftKeyPoint[0].pt.y;//裁剪高度
 	int height_move_2 = 0;
@@ -767,7 +768,11 @@ int TXPJAlgorithm::imageStitching_cols2(Mat leftImage, Mat rightImage, Mat &outI
 		leftImage = leftImage(Rect(0, 0, leftImage.cols, leftImage.rows - height_move_2));
 	}
 
+
 	int averageDistance = distancesVector[0];//重叠距离
+	if (averageDistance > leftImage.cols || averageDistance > rightImage.cols){
+		return 0;
+	}
 
 	//在最强匹配点左侧的重叠区域进行累加，是衔接稳定过渡，消除突变
 	Mat imageLeftOverlap, imageRightOverlap; //图1和图2的重叠部分	

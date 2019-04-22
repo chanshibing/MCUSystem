@@ -156,9 +156,9 @@ int CMCU_systemView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	dwStyle |= LVS_EX_GRIDLINES;//网格线（只适用与report风格的listctrl）
 	dwStyle |= LVS_EX_CHECKBOXES;//item前生成checkbox控件
 	m_list.SetExtendedStyle(dwStyle); //设置扩展风格
-	m_list.InsertColumn(0, "编号", LVCFMT_LEFT, 100);//插入列
+	m_list.InsertColumn(0, "编号", LVCFMT_LEFT, 80);//插入列
 	m_list.InsertColumn(1, "类别", LVCFMT_LEFT, 50);//插入列
-	m_list.InsertColumn(2, "类型", LVCFMT_LEFT, 50);//插入列
+	m_list.InsertColumn(2, "类型", LVCFMT_LEFT, 70);//插入列
 
 	m_messageList.Create(LVS_ALIGNLEFT | WS_CHILD | WS_VISIBLE | LVS_SINGLESEL, CRect(0, 0, 0, 0), this, 58);
 	LONG lStyle1;
@@ -276,6 +276,8 @@ void CMCU_systemView::OnFileOpen()
 	// TODO:  在此添加命令处理程序代码
 	int returnStatus = openFilePath.openFile(m_hWnd, flag_setPara);//打开文件目录
 
+	adjustShowPictureRegion(200, 200, 0, 40);//调整图片显示区域大小
+
 	if (returnStatus == 1)
 	{
 		MessageBox(_T("打开失败"), _T("MCU系统"));
@@ -354,6 +356,17 @@ void CMCU_systemView::OnFileOpen()
 }
 
 /*
+*调整图片显示区域大小
+*
+*/
+void CMCU_systemView::adjustShowPictureRegion(int left, int right, int top, int bottom){
+	clientToLeft = left;//图片显示区域到客户端左边距离
+	clientToRight = right;//图片显示区域到客户端右边距离
+	clientToUp = top;//图片显示区域到客户端上边距离
+	clientToBottom = bottom;//图片显示区域到客户端下边距离
+}
+
+/*
 *保存文件
 *
 */
@@ -404,9 +417,9 @@ void CMCU_systemView::showPicture(Mat mat)
 	int width = mat.cols;
 	int height = mat.rows;
 	pictureRatio = 0.0;
-	rect.left += 200;
-	rect.bottom = rect.bottom - 40;
-	rect.right -= 200;
+	rect.left += clientToLeft;
+	rect.bottom = rect.bottom - clientToBottom;
+	rect.right -= clientToRight;
 	int rectWidth = rect.right - rect.left;
 	int rectHeight = rect.bottom - rect.top;
 	if (rectWidth * 1.0 / rectHeight <= width * 1.0 / height)     //以长为主,调整大小
@@ -670,6 +683,13 @@ void CMCU_systemView::setPageTurningComponent()
 		m_btn_next.ShowWindow(SW_HIDE);
 		m_s_middle.ShowWindow(SW_HIDE);
 	}
+}
+/*
+	#隐藏翻页组件#
+*/
+void CMCU_systemView::hideButtonCompo(){
+	flag_showComponent = false;
+	setPageTurningComponent();
 }
 /*
 #设置listControl#
@@ -1744,6 +1764,7 @@ void CMCU_systemView::OnDetect()
 			MessageBox("检测器件类别库为空!!!", "MCU系统");
 			return;
 		}
+
 		adddetect.className.clear();
 		detectAlgorithm.numOfClassName.clear();
 		adddetect.className = addDetectClassHouse.className;//赋值
@@ -1761,10 +1782,7 @@ void CMCU_systemView::OnDetect()
 		setDetectStopEnable(false);
 
 		//隐藏翻页组件
-		flag_showComponent = false;
-		setPageTurningComponent();
-
-		
+		hideButtonCompo();
 
 		setStartCompareEnable(true);//开始对比按钮
 		setPauseCompareEnable(true);//暂停对比按钮
@@ -2678,4 +2696,40 @@ int CMCU_systemView::writeXML_Configure()
 	doc.SaveFile("configure.xml");
 	doc.Clear();
 	return 1;
+}
+/*
+	#隐藏左边显示元器件信息的list#
+*/
+void CMCU_systemView::hideMessageList(){
+	m_messageList.ShowWindow(SW_HIDE);
+}
+/*
+#显示左边显示元器件信息的list#
+*/
+void CMCU_systemView::showMessageList(){
+	m_messageList.ShowWindow(SW_SHOW);
+}
+/*
+#隐藏右边所有元器件列表#
+*/
+void CMCU_systemView::hideAllDetectList(){
+	m_list.ShowWindow(SW_HIDE);
+}
+/*
+#显示右边所有元器件列表#
+*/
+void CMCU_systemView::showAllDetectList(){
+	m_list.ShowWindow(SW_SHOW);
+}
+/*
+#隐藏左边图像拼接信息显示框#
+*/
+void CMCU_systemView::hideTXPJMessageEdit(){
+	m_editMessage.ShowWindow(SW_HIDE);
+}
+/*
+#显示左边图像拼接信息显示框#
+*/
+void CMCU_systemView::showTXPJMessageEdit(){
+	m_editMessage.ShowWindow(SW_SHOW);
 }

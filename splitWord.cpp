@@ -63,12 +63,18 @@ void SplitWord::splitWordProcess(Mat srcMat)
 
 	//找出上下边界
 	Vec2i topBottomRange = findTopBottomRange(tmpMat);
-
+	if (topBottomRange[0] >= topBottomRange[1]){
+		delete[] vProjection;
+		return;
+	}
 	tmpMat = tmpMat(Rect(0, topBottomRange[0], tmpMat.cols, topBottomRange[1] - topBottomRange[0]));
 
 	//找出左右边界
 	Vec2i leftRightRange = findLeftRightRange(tmpMat);
-
+	if (leftRightRange[0] >= leftRightRange[1]){
+		delete[] vProjection;
+		return;
+	}
 	tmpMat = tmpMat(Rect(leftRightRange[0], 0, leftRightRange[1] - leftRightRange[0], tmpMat.rows));
 
 	//反向
@@ -96,7 +102,7 @@ void SplitWord::splitWordProcess(Mat srcMat)
 		splitedMat.push_back(ROI);
 	}
 
-	delete vProjection;
+	delete[] vProjection;
 }
 /*
 	#寻找左右边界位置#
@@ -174,7 +180,7 @@ Vec2i SplitWord::findLeftRightRange(Mat srcMat)
 		}
 	}
 	left = left1 > left2 ? left1 + 2 : left2 + 2;
-	right = right1 < right2 ? right1 - 3 : right2 - 3;
+	right = right1 > right2 ? right1 - 3 : right2 - 3;
 	return Vec2i(left, right);
 }
 
@@ -243,7 +249,7 @@ Vec2i SplitWord::findTopBottomRange(Mat srcMat)
 	top = top > 0 ? top : 0;
 	bottom = bottom < srcMat.rows ? bottom : srcMat.rows;
 
-	delete ProjectionCount;
+	delete[] ProjectionCount;
 	return Vec2i(top, bottom);
 }
 

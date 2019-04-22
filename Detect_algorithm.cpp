@@ -83,7 +83,6 @@ int DetectAlgorithm::drawDetectInstances(Mat &src_img, vector<CString> className
 			instanceRect.right_bottom.x = sv[3];
 			instanceRect.right_bottom.y = sv[2];
 			instanceRect.instanceClass = sv[4];
-
 			numOfClassName[instanceRect.instanceClass - 1]++;//类别数量加一
 			instanceRect.currentIndex = numOfClassName[instanceRect.instanceClass - 1];//当前器件的下标
 

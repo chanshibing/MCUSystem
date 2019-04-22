@@ -43,7 +43,6 @@
 #define IDC_LIST1                       1058
 #define IDC_BUTTON_ADDDETECTCLASS       1059
 #define IDC_EDIT_ADDCLASSNAME           1060
-#define IDC_RICHEDIT21                  1063
 #define IDB_BITMAP_OPENFILE             2000
 #define IDB_BITMAP_SAVE                 2001
 #define IDB_BITMAP_REVOKE               2002
@@ -135,13 +134,16 @@
 #define ID_32910                        32910
 #define ID_32911                        32911
 #define ID_32912                        32912
+#define ID_Menu32913                    32913
+#define ID_32914                        32914
+#define ID_32915                        32915
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        345
-#define _APS_NEXT_COMMAND_VALUE         32913
+#define _APS_NEXT_COMMAND_VALUE         32916
 #define _APS_NEXT_CONTROL_VALUE         1064
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
